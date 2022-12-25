@@ -1,0 +1,19 @@
+nav {
+  height: 5rem;
+}
+
+.badge-notify{
+  background:#c90cf8;
+  position:relative;
+  top: -12px;
+  left: -16px;
+ }
+
+ .icon-color-custom {
+  color:rgb(130, 134, 197)
+ }
+
+ .nav-shadow {
+  box-shadow: rgba(130, 134, 197, 0.1) 0px 1px 0px, rgba(130, 134, 197, 0.1) 0px 8px 24px, rgba(49, 58, 189, 0.1) 0px 16px 48px;
+ }
+
