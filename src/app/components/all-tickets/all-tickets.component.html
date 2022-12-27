@@ -48,15 +48,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+      <tr *ngFor="let ticket of allTickets">
+        <td>{{ticket.ticketId}}</td>
+        <td>{{ticket.title}}</td>
+        <td>{{ticket.priority}}</td>
+        <td>{{ticket.dateSubmitted}}</td>
+        <td>{{ticket.userId}}</td>
+        <td>{{ticket.areaId}}</td>
+        <td>{{ticket.equipmentId}}</td>
+        <td>{{ticket.manufacturer}}</td>
         <td>
           <button class="btn btn-xs btn-link p-0" style="font-size: 25px">
             <i class="fa-solid fa-circle-info" style="color: #8286c5"></i>

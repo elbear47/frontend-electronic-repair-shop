@@ -7,56 +7,55 @@
       <div class="form-row mb-3">
         <div class="col-12">
           <div class="d-flex justify-content-center mt-4">
-          <input type="text" class="form-control bg-custom text-warning ms-4 me-4" placeholder="Title">
+          <input name="_title" [(ngModel)]="ticketModel.title" type="text" class="form-control bg-custom text-warning ms-4 me-4" placeholder="Title">
           </div>
           <div class="d-flex justify-content-center mt-4">
-            <select class="form-select bg-custom text-light ms-4 me-4" >
-              <option selected>Select Area</option>
-              <option value="1">One</option>
+            <select name="_areaId"  [(ngModel)]="ticketModel.areaId" class="form-select bg-custom text-warning ms-4 me-4">
+              <!-- <option selected>Select Area</option> -->
+              <option *ngFor="let area of areaList" value={{area.areaId}}>{{area.areaName}}</option>
             </select>
-            <select class="form-select bg-custom text-light ms-4 me-4" >
-              <option selected>Select Equipment</option>
-              <option value="1">One</option>
+            <select name="_equipmentId" [(ngModel)]="ticketModel.equipmentId" class="form-select bg-custom text-warning ms-4 me-4" >
+              <!-- <option selected>Select Equipment</option> -->
+              <option *ngFor="let equip of equipList" value={{equip.equipmentId}}>{{equip.equipmentName}}</option>
             </select>
           </div>
           <div class="d-flex justify-content-center mt-4">
-              <input type="text" class="form-control bg-custom text-light ms-4 me-4" placeholder="Material Number">
-              <input type="text" class="form-control bg-custom text-light ms-4 me-4" placeholder="Manufacturer">
+              <input name="_partNumber" [(ngModel)]="ticketModel.partNumber" type="text" class="form-control bg-custom text-warning ms-4 me-4" placeholder="Material Number">
+              <input name="_manufacturer" [(ngModel)]="ticketModel.manufacturer" type="text" class="form-control bg-custom text-warning ms-4 me-4" placeholder="Manufacturer">
           </div>
           <div class="d-flex justify-content-center mt-4">
-            <select class="form-select bg-custom text-light ms-4 me-4">
+            <select name="_priority" [(ngModel)]="ticketModel.priority" class="form-select bg-custom text-warning ms-4 me-4">
               <option selected>Select Priority</option>
               <option value="1">1 (Critical Tool Down)</option>
               <option value="2">2 (Needed Quickly)</option>
               <option value="3">3 (It Can Wait)</option>
             </select>
-            <select class="form-select bg-custom text-light ms-4 me-4">
+            <select name="_postRepairDispoId" [(ngModel)]="ticketModel.postRepairDispoId" class="form-select bg-custom text-warning ms-4 me-4">
               <option selected>Select Dispo</option>
               <option value="1">1 (Return To Requester)</option>
               <option value="2">2 (Recycle Electronic)</option>
               <option value="3">3 (Put in Storage in Attic)</option>
             </select>
-            <select class="form-select bg-custom text-light ms-4 me-4">
+            <select  name="_quantity" [(ngModel)]="ticketModel.quantity" class="form-select bg-custom text-warning ms-4 me-4">
               <option selected>Select Qty</option>
-              <option value="${}">1</option>
+              <option *ngFor="let num of numberChoices" value={{num}}>{{num}}</option>
             </select>
         </div>
-          <div class="d-flex justify-content-center mt-4">
+          <!-- <div class="d-flex justify-content-center mt-4">
             <input type="text" class="form-control bg-custom text-light ms-4 me-4" placeholder="Requested Complete Date">
+          </div> -->
+          <div class="d-flex justify-content-center mt-4">
+            <input name="_defectSymptom" [(ngModel)]="ticketModel.defectSymptom" type="text" class="form-control bg-custom text-warning ms-4 me-4" placeholder="Defect Symptom">
           </div>
           <div class="d-flex justify-content-center mt-4">
-              <input type="text" class="form-control bg-custom text-light ms-4 me-4" placeholder="Title">
+            <label class="ms-4" for="requesterComments">Requester Comments</label>
+            <textarea name="_requesterCommments" [(ngModel)]="ticketModel.requesterComments" class="form-control rounded-0 ms-4 me-4 bg-custom text-warning" id="requesterComments" rows="3"></textarea>
           </div>
 
-          <div class="d-flex justify-content-center mt-4">
-            <select class="form-select bg-custom text-light ms-4 me-4">
-              <option selected>Area</option>
-              <option value="1">One</option>
-            </select>
-            <select class="form-select bg-custom text-light ms-4 me-4">
-              <option selected>Equipment</option>
-              <option value="1">One</option>
-            </select>
+          <div class="d-flex justify-content-around mt-4">
+            <button type="button" class="btn btn-danger" (click)="clearAllInputs()">Clear all</button>
+            <button type="button" class="btn btn-success" (click)="submitNewTicket()">Submit</button>
+
             </div>
 
 
@@ -66,4 +65,5 @@
     </form>
   </div>
 </div>
+
 
