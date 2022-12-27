@@ -1,6 +1,6 @@
 <app-topnav></app-topnav>
 
-
+<!-- this will be an admin page -->
 <div class="container mt-5">
   <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark nav-shadow">
 
@@ -11,19 +11,24 @@
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
           <div class="container">
-            <button type="button" class="btn btn-outline-success">New Ticket
+            <button type="button" class="btn btn-outline-success" (click)="navigateToNewTicket()">New Ticket
               <i class="fa-solid fa-plus ms-1"></i>
             </button>
           </div>
         </li>
         <li class="nav-item">
           <div class="container">
-            <button type="button" class="btn btn-outline-primary">View Open</button>
+            <button type="button" class="btn btn-outline-primary" (click)="loadOpenTickets()">View Open</button>
           </div>
         </li>
         <li class="nav-item">
           <div class="container">
-            <button type="button" class="btn btn-outline-danger">View Closed</button>
+            <button type="button" class="btn btn-outline-danger"(click)="loadClosedTickets()">View Closed</button>
+          </div>
+        </li>
+        <li class="nav-item">
+          <div class="container">
+            <button type="button" class="btn btn-outline-info"(click)="loadTickets()">View All</button>
           </div>
         </li>
 
@@ -58,11 +63,37 @@
         <td>{{ticket.equipmentId}}</td>
         <td>{{ticket.manufacturer}}</td>
         <td>
-          <button class="btn btn-xs btn-link p-0" style="font-size: 25px">
+          <button class="btn btn-xs btn-link p-0" style="font-size: 25px" (click)="updateSelectedTicket(ticket)">
             <i class="fa-solid fa-circle-info" style="color: #8286c5"></i>
           </button>
         </td>
       </tr>
     </tbody>
   </table>
+</div>
+
+
+<div
+  class="modal"
+  tabindex="-1"
+  role="dialog"
+  ngModel="displayQuestionModal"
+  ngDefaultControl
+  [ngStyle]="{ display: displayStyleModal } ">
+
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"> {{ userSelectedTicket.title }} </h4>
+        <p class="modal-title"> Ticket Id: {{userSelectedTicket.ticketId}} </p>
+      </div>
+      <div class="modal-body">
+       <p>modal body goes here</p>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-primary" (click)="EditTicket()">Next Question</button> -->
+        <button type="button" class="btn btn-danger" (click)="closePopup()">Close</button>
+      </div>
+    </div>
+  </div>
 </div>

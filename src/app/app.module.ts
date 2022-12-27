@@ -8,7 +8,6 @@ import { SubmitTicketComponent } from './components/submit-ticket/submit-ticket.
 import { AllTicketsComponent } from './components/all-tickets/all-tickets.component';
 import { TopnavComponent } from './components/topnav/topnav.component';
 import { MetricsDashComponent } from './components/metrics-dash/metrics-dash.component';
-import { TicketInfoComponent } from './components/ticket-info/ticket-info.component';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -17,8 +16,7 @@ import { FormsModule } from '@angular/forms';
     SubmitTicketComponent,
     AllTicketsComponent,
     TopnavComponent,
-    MetricsDashComponent,
-    TicketInfoComponent
+    MetricsDashComponent
   ],
   imports: [
     BrowserModule,

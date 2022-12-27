@@ -21,39 +21,27 @@ export class SubmitTicketComponent implements OnInit {
   constructor(private ticketService: TicketService, private router: Router) { }
 
   ngOnInit(): void {
-    this.getAreas();
-    this.getEquips();
+    this.loadAreas();
+    this.loadEquips();
   }
 
-  getAreas(): void {
+  loadAreas(): void {
     this.ticketService.getAllAreas().subscribe((response) => {
       this.areaList = response;
     })
   }
-  getEquips(): void {
+  loadEquips(): void {
     this.ticketService.getAllEquipment().subscribe((data) => {
       this.equipList = data;
     })
-  }
-
-  getEquipsByAreaId(areaId:number): void {
-    this.ticketService.getEquipsByAreaId(areaId).subscribe((response) => {
-      this.equipList = response;
-    })
-  }
-
-  getSelectedAreaId(): number {
-    return this.ticketModel.areaId;
   }
 
   clearAllInputs(): void {
     this.ticketModel = {} as Ticket; // reset values by reinitalizing to empty ticket
   }
 
-
-
   submitNewTicket(): void{
-    this.ticketService.createAndAddNewTicket(this.ticketModel).subscribe();
+    this.ticketService.addNewTicket(this.ticketModel).subscribe();
   }
 
 
