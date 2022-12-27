@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-topnav',
@@ -11,7 +12,19 @@ export class TopnavComponent implements OnInit {
   displayAdminText: string = 'admin';
   numOfUserNotifications: number = 1;
 
-  constructor() { }
+  constructor(private router: Router) { }
+
+  goToHome(): void{
+    this.router.navigate(['/home']);
+
+  }
+  goToNewTicket(): void{
+    this.router.navigate(['/newTicket']);
+  }
+  goToMetrics(): void{
+    this.router.navigate(['/metrics']);
+  }
+
 
   ngOnInit(): void {
   }
