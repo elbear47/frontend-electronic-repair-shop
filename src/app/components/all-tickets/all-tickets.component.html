@@ -49,7 +49,9 @@
         <th scope="col">Area</th>
         <th scope="col">Tool</th>
         <th scope="col">Manufacturer</th>
-        <th scope="col">Info</th>
+        <th scope="col">Status</th>
+        <th scope="col">Edit</th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -57,22 +59,32 @@
         <td>{{ticket.ticketId}}</td>
         <td>{{ticket.title}}</td>
         <td>{{ticket.priority}}</td>
-        <td>{{ticket.dateSubmitted}}</td>
+        <td>{{ticket.dateSubmitted | date :'short'}}</td>
         <td>{{ticket.userId}}</td>
-        <td>{{ticket.areaId}}</td>
-        <td>{{ticket.equipmentId}}</td>
+        <td>{{getAreaNameById(ticket.areaId) }}</td>
+        <td>{{getEquipNameById(ticket.equipmentId)}}</td>
         <td>{{ticket.manufacturer}}</td>
+        <td>{{ticket.closedOrOpen}}</td>
+
         <td>
-          <button class="btn btn-xs btn-link p-0" style="font-size: 25px" (click)="updateSelectedTicket(ticket)">
-            <i class="fa-solid fa-circle-info" style="color: #8286c5"></i>
+          <button class="btn btn-xs btn-link p-0" style="font-size: 20px" (click)="updateSelectedTicket(ticket)">
+            <i class="fa-solid fa-edit" style="color: #8286c5"></i>
           </button>
+        </td>
+        <td>
+          <div *ngIf="ticket.closedOrOpen == 'open' ; else elseBlock">
+            <button class="btn btn-xs btn-outline-danger">Close</button>
+          </div>
+          <ng-template #elseBlock>
+            <button class="btn btn-xs btn-outline-warning">Reopen</button>
+          </ng-template>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
 
-
+<!-- modal for popup for editing a ticket -->
 <div
   class="modal"
   tabindex="-1"
@@ -82,16 +94,72 @@
   [ngStyle]="{ display: displayStyleModal } ">
 
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content bg-grey-custom">
       <div class="modal-header">
-        <h4 class="modal-title"> {{ userSelectedTicket.title }} </h4>
-        <p class="modal-title"> Ticket Id: {{userSelectedTicket.ticketId}} </p>
+        <h4 class="modal-title text-white"> {{ userSelectedTicket.title }} </h4>
+        <p class="modal-title text-white"> Ticket Id: {{userSelectedTicket.ticketId}} </p>
+
       </div>
-      <div class="modal-body">
-       <p>modal body goes here</p>
+      <div class="modal-body text-white">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+              <div class="form-group row">
+
+                <label for="quantity" class="col-form-label text-white">Quantity:<span *ngIf="!onEditMode" > {{userSelectedTicket.quantity}}</span></label>
+                <input *ngIf="onEditMode" [(ngModel)]="userSelectedTicket.quantity" type="text" class="form-control" id="quantity" name="quantity" value={{userSelectedTicket.quantity}}>
+              </div>
+            </div>
+            <div class="col-sm">
+              <div class="form-group row">
+                <label for="priority" class="col-form-label text-white">Priority:<span *ngIf="!onEditMode" > {{userSelectedTicket.priority}}</span></label>
+                <input *ngIf="onEditMode" [(ngModel)]="userSelectedTicket.priority" type="text" class="form-control" id="priority" name="priority" value={{userSelectedTicket.priority}}>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              <div class="form-group row">
+                <label for="newPartCost" class="col-form-label text-white">New Part Cost:<span *ngIf="!onEditMode" > {{userSelectedTicket.newPartCost}}</span></label>
+                <input *ngIf="onEditMode" [(ngModel)]="userSelectedTicket.newPartCost" type="text" class="form-control" id="newPartCost" name="newPartCost" value={{userSelectedTicket.newPartCost}}>
+              </div>
+            </div>
+            <div class="col-sm">
+              <div class="form-group row">
+                <label for="partNumber" class="col-form-label text-white">Part Number:<span *ngIf="!onEditMode" > {{userSelectedTicket.partNumber}}</span></label>
+                <input *ngIf="onEditMode" [(ngModel)]="userSelectedTicket.partNumber" type="text" class="form-control" id="partNumber" name="partNumber" value={{userSelectedTicket.partNumber}}>
+              </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="defectSymptom" class="col-form-label text-white">Defect Symptom:<span *ngIf="!onEditMode" > {{userSelectedTicket.defectSymptom}}</span></label>
+          <input *ngIf="onEditMode" [(ngModel)]="userSelectedTicket.defectSymptom" type="text" class="form-control" id="defectSymptom" name="defectSymptom" value={{userSelectedTicket.defectSymptom}}>
+        </div>
+
+        <div class="form-group row">
+          <label for="userName" class="col-form-label text-white">Username:<span *ngIf="!onEditMode" > {{userSelectedTicket.userId}}</span></label>
+          <input *ngIf="onEditMode" [(ngModel)]="userSelectedTicket.userId" type="text" class="form-control" id="userName" name="userName" value={{userSelectedTicket.userId}}>
+        </div>
+        <div class="form-group row">
+          <label for="areaName" class="col-form-label text-white">Area:<span *ngIf="!onEditMode" > {{userSelectedTicket.areaId}}</span></label>
+          <input *ngIf="onEditMode" [(ngModel)]="userSelectedTicket.areaId" type="text" class="form-control" id="areaName" name="areaName" value={{userSelectedTicket.areaId}}>
+        </div>
+        <div class="form-group row">
+          <label for="equipmentId" class="col-form-label text-white">Equipment:<span *ngIf="!onEditMode" > {{userSelectedTicket.equipmentId}}</span></label>
+          <input *ngIf="onEditMode" [(ngModel)]="userSelectedTicket.equipmentId" type="text" class="form-control" id="equipmentId" name="equipmentId" value={{userSelectedTicket.equipmentId}}>
+        </div>
+        <div class="form-group row">
+          <label for="postRepairDispo" class="col-form-label text-white">Post Repair Dispo:<span *ngIf="!onEditMode" > {{userSelectedTicket.postRepairDispoId}}</span></label>
+          <input *ngIf="onEditMode" [(ngModel)]="userSelectedTicket.postRepairDispoId" type="text" class="form-control" id="postRepairDispo" name="postRepairDispo" value={{userSelectedTicket.postRepairDispoId}}>
+        </div>
+        <div class="form-group row">
+          <label for="costCenter" class="col-form-label text-white">Manufacturer:<span *ngIf="!onEditMode" > {{userSelectedTicket.costCenterId}}</span></label>
+          <input *ngIf="onEditMode" [(ngModel)]="userSelectedTicket.costCenterId" type="text" class="form-control" id="costCenter" name="costCenter" value={{userSelectedTicket.costCenterId}}>
+        </div>
+
       </div>
-      <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-primary" (click)="EditTicket()">Next Question</button> -->
+      <div class="modal-footer justify-content-between">
+        <button class="btn btn-warning" (click)="turnEditModeOn()">Edit Ticket</button>
+        <button *ngIf="onEditMode" class="btn btn-primary" (click)="updateTicketDetails(userSelectedTicket)">Save Changes</button>
         <button type="button" class="btn btn-danger" (click)="closePopup()">Close</button>
       </div>
     </div>

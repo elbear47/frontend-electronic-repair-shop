@@ -17,4 +17,5 @@ export interface Ticket {
     equipmentId: number;
     postRepairDispoId?: number;
     costCenterId?: number;
+    closedOrOpen?: string;
 }

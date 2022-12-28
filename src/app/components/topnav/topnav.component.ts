@@ -8,11 +8,11 @@ import { Router } from '@angular/router';
 })
 export class TopnavComponent implements OnInit {
 
+  constructor(private router: Router) { }
+
   displayAdmin: string = 'relative';
   displayAdminText: string = 'admin';
   numOfUserNotifications: number = 1;
-
-  constructor(private router: Router) { }
 
   goToHome(): void{
     this.router.navigate(['/home']);

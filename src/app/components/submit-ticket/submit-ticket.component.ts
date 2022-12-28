@@ -12,13 +12,14 @@ import { Router } from '@angular/router';
 })
 export class SubmitTicketComponent implements OnInit {
 
+  constructor(private ticketService: TicketService, private router: Router) { }
+
   ticketModel = {} as Ticket;
   areaList: Area[] = [];
   equipList: Equipment[] = [];
-
   numberChoices: number[] = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 
-  constructor(private ticketService: TicketService, private router: Router) { }
+
 
   ngOnInit(): void {
     this.loadAreas();
@@ -42,6 +43,10 @@ export class SubmitTicketComponent implements OnInit {
 
   submitNewTicket(): void{
     this.ticketService.addNewTicket(this.ticketModel).subscribe();
+  }
+
+  navigateHome() : void {
+    this.router.navigate(['/home']);
   }
 
 
