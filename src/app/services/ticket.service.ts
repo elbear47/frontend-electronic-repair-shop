@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Area } from '../interfaces/area';
 import { Equipment } from '../interfaces/equipment';
 import { Ticket } from '../interfaces/ticket';
+import { User } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,12 @@ export class TicketService {
   getAllEquipment = (): Observable<Equipment[]> => {
     return this.http.get<Equipment[]>(
       this.baseUrl + '/Equipment'
+    );
+  };
+
+  getAllUsers = (): Observable<User[]> => {
+    return this.http.get<User[]>(
+      this.baseUrl + '/User'
     );
   };
 
@@ -55,6 +62,14 @@ export class TicketService {
 
   addNewTicket(ticketObj: Ticket){
     return this.http.post<Ticket>(`https://localhost:7176/api/Ticket`, ticketObj);
+  }
+
+  deleteTicket(ticketId: number){
+    return this.http.delete<Ticket>(this.baseUrl + '/Ticket/'+ ticketId);
+  }
+
+  changeTicketStatus(ticketId: number, newStatus:string) {
+    return this.http.put<any>(this.baseUrl + '/Ticket/UpdateTicketStatus/' + ticketId + '?newStatus=' + newStatus, null)
   }
 
 

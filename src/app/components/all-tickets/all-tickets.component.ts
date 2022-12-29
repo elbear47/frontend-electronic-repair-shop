@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Area } from 'src/app/interfaces/area';
 import { Equipment } from '../../interfaces/equipment';
 import {formatDate} from '@angular/common';
+import { User } from 'src/app/interfaces/user';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class AllTicketsComponent implements OnInit {
   allTickets: Ticket[] = [];
   areas: Area[] = [];
   equips: Equipment[] = [];
+  users: User[] = [];
 
   userSelectedTicket = {} as Ticket;
 
@@ -32,6 +34,7 @@ export class AllTicketsComponent implements OnInit {
     this.loadTickets(); // load ticket list
     this.loadAreas(); // load all areas to get names
     this.loadEquips(); // load all equips to get names
+    this.loadUsers(); // load users to get names
   }
 
   loadAreas(): void {
@@ -39,9 +42,16 @@ export class AllTicketsComponent implements OnInit {
       this.areas = data;
     });
   }
+
   loadEquips(): void {
     this.ticketService.getAllEquipment().subscribe((data) => {
       this.equips = data;
+    });
+  }
+
+  loadUsers(): void {
+    this.ticketService.getAllUsers().subscribe((data) => {
+      this.users = data;
     });
   }
 
@@ -67,6 +77,9 @@ export class AllTicketsComponent implements OnInit {
   getEquipNameById(id:number): string {
     return this.equips.find(e => e.equipmentId == id)?.equipmentName!; // non null assertion
   }
+  getUserById(id:number): string {
+    return this.users.find(u => u.userId == id)?.userName!; // non null assertion
+  }
   formatDate(relatedDate: Date):string {
     return relatedDate.toDateString();
   }
@@ -76,6 +89,17 @@ export class AllTicketsComponent implements OnInit {
     this.onEditMode = false; // turn edit mode off as a default
     this.userSelectedTicket = this.ticketService.getTicket(); // play with ticket in component class
     this.openPopup(); // show popup
+  }
+
+  changeTicketStatus(ticket:Ticket): void{
+    if (ticket.closedOrOpen?.toLowerCase() == 'open') {
+      this.ticketService.changeTicketStatus(ticket.ticketId!,'closed').subscribe();
+      this.loadTickets();
+    }
+    else if (ticket.closedOrOpen?.toLowerCase() == 'closed') {
+      this.ticketService.changeTicketStatus(ticket.ticketId!,'open').subscribe();
+      this.loadTickets();
+    }
   }
 
   navigateToNewTicket(): void {
@@ -90,6 +114,11 @@ export class AllTicketsComponent implements OnInit {
   closePopup(): void {
     this.ticketService.setDisplayStyleModal('none');
     this.displayStyleModal = this.ticketService.getDisplayStyleModal();
+  }
+
+  deleteTicket(id: number): void {
+    this.ticketService.deleteTicket(id).subscribe();
+    this.loadTickets(); // after delete reload tickets
   }
 
   turnEditModeOn(): void {

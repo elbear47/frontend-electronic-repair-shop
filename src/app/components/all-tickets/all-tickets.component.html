@@ -50,8 +50,7 @@
         <th scope="col">Tool</th>
         <th scope="col">Manufacturer</th>
         <th scope="col">Status</th>
-        <th scope="col">Edit</th>
-        <th scope="col"></th>
+        <th scope="col" class="text-center">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -60,24 +59,32 @@
         <td>{{ticket.title}}</td>
         <td>{{ticket.priority}}</td>
         <td>{{ticket.dateSubmitted | date :'short'}}</td>
-        <td>{{ticket.userId}}</td>
+        <td>{{getUserById(ticket.userId!)}}</td>
         <td>{{getAreaNameById(ticket.areaId) }}</td>
         <td>{{getEquipNameById(ticket.equipmentId)}}</td>
         <td>{{ticket.manufacturer}}</td>
         <td>{{ticket.closedOrOpen}}</td>
 
-        <td>
-          <button class="btn btn-xs btn-link p-0" style="font-size: 20px" (click)="updateSelectedTicket(ticket)">
-            <i class="fa-solid fa-edit" style="color: #8286c5"></i>
-          </button>
-        </td>
-        <td>
-          <div *ngIf="ticket.closedOrOpen == 'open' ; else elseBlock">
-            <button class="btn btn-xs btn-outline-danger">Close</button>
+        <td class="d-inline-flex">
+          <div class="edit mx-2">
+            <button class="btn btn-xs btn-link p-0" style="font-size: 20px" (click)="updateSelectedTicket(ticket)">
+              <i class="fa-solid fa-edit" style="color: #8286c5"></i>
+            </button>
           </div>
-          <ng-template #elseBlock>
-            <button class="btn btn-xs btn-outline-warning">Reopen</button>
-          </ng-template>
+          <div class="delete mx-2">
+            <button class="btn btn-xs btn-link p-0" style="font-size: 20px" (click)="deleteTicket(ticket.ticketId!)">
+              <i class="fa-solid fa-trash-can" style="color: #8286c5"></i>
+            </button>
+          </div>
+          <div class="closeOrOpen mx-2">
+            <div *ngIf="ticket.closedOrOpen == 'open' ; else elseBlock">
+              <button class="btn btn-xs btn-outline-light" style="font-size: 12px" (click)="changeTicketStatus(ticket)" >Close</button>
+            </div>
+            <ng-template #elseBlock>
+              <button class="btn btn-xs btn-outline-warning" style="font-size: 12px" (click)="changeTicketStatus(ticket)">Reopen</button>
+            </ng-template>
+          </div>
+
         </td>
       </tr>
     </tbody>
