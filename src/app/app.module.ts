@@ -9,6 +9,7 @@ import { AllTicketsComponent } from './components/all-tickets/all-tickets.compon
 import { TopnavComponent } from './components/topnav/topnav.component';
 import { MetricsDashComponent } from './components/metrics-dash/metrics-dash.component';
 import { FormsModule } from '@angular/forms';
+import { AdminAllTicksComponent } from './components/admin-all-ticks/admin-all-ticks.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { FormsModule } from '@angular/forms';
     SubmitTicketComponent,
     AllTicketsComponent,
     TopnavComponent,
-    MetricsDashComponent
+    MetricsDashComponent,
+    AdminAllTicksComponent
   ],
   imports: [
     BrowserModule,
